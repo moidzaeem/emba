@@ -100,6 +100,13 @@
                                 </a>
                             </li>
 
+                            <li>
+                                <a href="{{ route('classes.index') }}" class="waves-effect">
+                                    <i class="mdi mdi-book-open-page-variant"></i>
+                                    <span> Classes </span>
+                                </a>
+                            </li>
+
                             <!-- Grouping -->
                             <li>
                                 <a href="{{ route('groups.generate.form') }}" class="waves-effect">

@@ -35,17 +35,21 @@
         </div>
 
         <div class="mb-3">
-            <label for="class" class="form-label">Class (1 or 2)</label>
-            <input
-                type="number"
-                class="form-control @error('class') is-invalid @enderror"
+            <label for="class" class="form-label">Class</label>
+            <select
+                class="form-select form-control @error('class') is-invalid @enderror"
                 id="class"
                 name="class"
-                value="{{ old('class') }}"
-                min="1"
-                max="2"
                 required
             >
+                <option value="" disabled {{ old('class') ? '' : 'selected' }}>Select a class</option>
+                @foreach ($classes as $class)
+                    <option value="{{ $class->name }}" {{ old('class') == $class->name ? 'selected' : '' }}>
+                        {{ $class->name }}
+                    </option>
+                @endforeach
+
+            </select>
             @error('class')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -54,7 +58,7 @@
         <div class="mb-3">
             <label for="course_type" class="form-label">Course Type</label>
             <select
-                class="form-select @error('course_type') is-invalid @enderror"
+                class="form-select form-control @error('course_type') is-invalid @enderror"
                 id="course_type"
                 name="course_type"
                 required
@@ -70,7 +74,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="group_size" class="form-label">Group Size (2 to 6)</label>
+            <label for="group_size" class="form-label">Group Size (2 to 7)</label>
             <input
                 type="number"
                 class="form-control @error('group_size') is-invalid @enderror"
@@ -78,7 +82,7 @@
                 name="group_size"
                 value="{{ old('group_size') }}"
                 min="2"
-                max="6"
+                max="7"
                 required
             >
             @error('group_size')

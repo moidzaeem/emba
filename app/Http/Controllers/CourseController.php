@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CustomClass;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -15,16 +16,17 @@ class CourseController extends Controller
 
     public function create()
     {
-        return view('courses.create');
+        $classes = CustomClass::where('is_deleted', false)->get();
+        return view('courses.create', compact('classes'));
     }
 
     public function store(Request $request)
     {
         Course::create($request->validate([
             'name' => 'required',
-            'class' => 'required|integer|min:1|max:2',
+            'class' => 'required',
             'course_type' => 'required|in:Whole,Healthcare,Finance',
-            'group_size' => 'required|integer|min:2|max:6'
+            'group_size' => 'required|integer|min:2|max:7'
         ]));
 
         return redirect()->route('courses.index');
@@ -32,16 +34,17 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        return view('courses.edit', compact('course'));
+         $classes = CustomClass::where('is_deleted', false)->get();
+        return view('courses.edit', compact('course', 'classes'));
     }
 
     public function update(Request $request, Course $course)
     {
         $course->update($request->validate([
             'name' => 'required',
-            'class' => 'required|integer|min:1|max:2',
+            'class' => 'required',
             'course_type' => 'required|in:Whole,Healthcare,Finance',
-            'group_size' => 'required|integer|min:2|max:6'
+            'group_size' => 'required|integer|min:2|max:7'
         ]));
 
         return redirect()->route('courses.index');
